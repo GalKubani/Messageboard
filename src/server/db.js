@@ -1,10 +1,11 @@
 import Axios from 'axios'
 
-const DB_URL=`https://messageboard-yoko-default-rtdb.firebaseio.com/`
-// nn to set up after rewatching, either on ec2 or other one
+const DB_URL=`http://ec2-18-203-251-138.eu-west-1.compute.amazonaws.com`
+// 
 export const getMessagesFromDB = async () => {
     try {
-        const res = await Axios.get(DB_URL+ "messages.json");
+        const res = await Axios.get(DB_URL+"/messages/getall");
+
         const messages = [];
         for (let id in res.data) {
             messages.push({
@@ -20,7 +21,7 @@ export const getMessagesFromDB = async () => {
 
 export const postMessageInDB = async (message) => {
     try {
-        const res = await Axios.post(DB_URL + "messages.json", { message });
+        const res = await Axios.post(DB_URL+"/messages/new", { message:message });
         return res.data.message;
     } catch (err) {
         console.log(err);
